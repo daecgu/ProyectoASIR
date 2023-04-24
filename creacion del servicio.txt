@@ -1,0 +1,28 @@
+[Unit]
+Description=Gunicorn instance to serve ProyectoASIR
+After=network.target
+
+[Service]
+User=daniel
+Group=www-data
+WorkingDirectory=/home/daniel/PycharmProjects/ProyectoASIR
+Environment="PATH=/home/daniel/PycharmProjects/ProyectoASIR/env/bin"
+ExecStart=/home/daniel/PycharmProjects/ProyectoASIR/env/bin/gunicorn --workers 3 --bind unix:ProyectoASIR.sock -m 007 entrypoint:app
+
+[Install]
+WantedBy=multi-user.target
+
+
+-------------------------------------------------------------------
+Configuración NGINX:
+
+
+server {
+    listen 80;
+    server_name localhost;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/home/daniel/PycharmProjects/ProyectoASIR/ProyectoASIR.sock;
+    }
+}

@@ -1,3 +1,30 @@
 body {
-    background-color: lightgreen;
+    background-color: white;
    }
+
+#barra{
+
+    margin:auto;
+    width: 900px;
+    list-style: none;
+    border-bottom: 1px dotted #999;
+    font-size: 2em;
+    color: rgb(1, 20 , 29);
+
+
+}
+
+#elem{
+
+    float: left;
+    margin-right: 45px;
+
+}
+
+a{
+    text-decoration: none;
+}
+
+a:visited{
+    color: rgb(1, 20 , 29);
+}

@@ -2,10 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %} {% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='micss.css')}}">
 </head>
 <body>
+    <ul id="barra">
+        <li id="elem">Inicio</li>
+        <li id="elem">Registro</li>
+        <li id="elem">Acceso</li>
+        <li id="elem">Información</li>
+    </ul>
+<br/>
+<br/><br/>
+    {% block content %}
 
+
+    {% endblock %}
+<br/><br/>
+
+    <center><img id="logo" src="https://www.mariaanasanz.es/wp-content/uploads/2022/06/logo_bueno_trans.png" alt="Logo Maria Ana Sanz"> </center>
 </body>
 </html>

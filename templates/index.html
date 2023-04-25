@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='micss.css')}}">
-</head>
-<body>
-<h1> Esta es la segunda vez que ejecuto este programa </h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %} Inicio {% endblock %}
+
+{% block content %}
+
+<h1> Bienvenido a la Aplicación del Proyecto final de ASIR de Daniel Echeverri. </h1>
+
+{% endblock %}
+

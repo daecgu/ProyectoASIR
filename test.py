@@ -1,8 +1,8 @@
 # Importamos el ORM
 from flask_sqlalchemy import SQLAlchemy
-# Importamos Flask
-from flask import Flask
-# Importamos para gestionar loggin
+# Importamos Flask, render template para los archivos html y url for para los links.
+from flask import Flask, render_template, url_for
+# Importamos para gestionar login
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
 from models import User, login_manager, db
@@ -10,10 +10,10 @@ from models import User, login_manager, db
 # Creamos una instancia Flask que se llama app
 app = Flask(__name__)
 # Establecemos seguridad para nuestro programa:
-app.config('SECRET_KEY') = 'erjkqhfvdnia(k)edjriopq372846%78342yr78hgfuihnusy78r3qurefanueyr7q238ehuryqwe78rpqroueiz$'
+# app.config('SECRET_KEY') = 'erjkqhfvdnia(k)edjriopq372846%78342yr78hgfuihnusy78r3qurefanueyr7q238ehuryqwe78rpqroueiz$'
 
 # Configuramos SQLAlchemy para que se comunique con nuestra base de datos Postgre
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql://USUARIO:CONTRASEÑA@Localhost:5432/NOMBREDATABASE'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql://daniel:asir23@Localhost:5432/proyectodb'
 # Como ahora es un entorno de pruebas establecemos que no se nos envíe una señal cada vez que realizamos cambios.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
 
@@ -33,10 +33,13 @@ def create_table():
 
 
 @app.route("/")
-def hola():
+def app_Proyecto():
+    return render_template('index.html')
+
+"""def hola():
     # return "<h1 style='color:blue'> Este test Funciona! </h1>" para la prueba inicial.
     # return "<h1 style='color:green'> Funciona gunicorn! </h1>"
-    return "<h1 style='color:red'> Funciona NGINX! </h1>"
+    return "<h1 style='color:red'> Funciona NGINX! </h1>"""""
 
 
 if __name__ == "__main__":

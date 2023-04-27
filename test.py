@@ -7,11 +7,11 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
 from models import User, login_manager, db
 
+
 # Creamos una instancia Flask que se llama app
 app = Flask(__name__)
 # Establecemos seguridad para nuestro programa:
-# app.config('SECRET_KEY') = 'erjkqhfvdnia(k)edjriopq372846%78342yr78hgfuihnusy78r3qurefanueyr7q238ehuryqwe78rpqroueiz$'
-
+# app.config('SECRET_KEY') = 'erjkqhfvdniedj'
 # Configuramos SQLAlchemy para que se comunique con nuestra base de datos Postgre
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://daniel:asir23@Localhost:5432/proyectodb'
 # Como ahora es un entorno de pruebas establecemos que no se nos envíe una señal cada vez que realizamos cambios.
@@ -49,7 +49,7 @@ def informacion():
     return render_template("informacion.html")
 
 
-@app.route('/registros')
+@app.route('/registros', methods=["GET", "POST"])
 def registros():
     return render_template("registros.html")
 

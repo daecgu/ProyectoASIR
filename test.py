@@ -2,12 +2,13 @@
 from flask_sqlalchemy import SQLAlchemy
 # Importamos Flask, render template para los archivos html y url for para los links.
 from flask import Flask, render_template, url_for, request, redirect
+import os
 # Importamos para gestionar login
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
 from models import User, login_manager, db
 # Importamos la clase para validar el formulario
-# from forms import SignupForm
+from forms import SignupForm
 
 # Creamos una instancia Flask que se llama app
 app = Flask(__name__)
@@ -54,16 +55,17 @@ def informacion():
 
 @app.route('/registros', methods=["GET", "POST"])
 def registros():
+    """
+    # Comprobación básica de que funciona un formulario http sencillo.
     if request.method == "POST":
         return redirect(url_for("app_proyecto"))
+        """
 
-    """form = SignupForm()
-
+    form = SignupForm()
     if form.validate_on_submit():
-        return redirect(url_for("app_proyecto"))"""
-    """ , form=form"""
+        return redirect(url_for("app_proyecto"))
 
-    return render_template("registros.html")
+    return render_template("registros.html", form=form)
 
 
 """def hola():

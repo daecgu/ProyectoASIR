@@ -12,23 +12,42 @@
 
     {{ form.hidden_tag()}}
 
+    {{form.id.label}}
+    {{form.id(size=9)}}
+    {% for error in form.id.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+    </br>
 
-    <label>DNI: </label>
-    <input type="text" id="id" name="id"/><br/>
+    {{form.name.label}}
+    {{form.name(size=50)}}
+    {% for error in form.name.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+    </br>
 
-    <label>Nombre: </label>
-    <input type="text" id="nombre" name=""/><br/>
+    {{form.email.label}}
+    {{form.email(size=50)}}
+    {% for error in form.email.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+    </br>
 
-    <label>Correo: </label>
-    <input type="text" id="email" name="email"/><br/>
+    {{form.password.label}}
+    {{form.password(size=50)}}
+    {% for error in form.password.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+    </br>
 
-    <label>Contraseña: </label>
-    <input type="text" id="password" name="password"/><br/>
+    {{form.descripcion.label}}
+    {{form.descripcion(size=1024)}}
+    {% for error in form.descripcion.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+    </br>
 
-    <label>Descripción: </label>
-    <input type="text" id="desc" name="desc"/><br/>
-
-    <input type="submit" id="envio_formulario" name="envio_formulario" value="Envía tu registro">
+    {{form.submit}}
 
 </form>
 <br/>

@@ -33,6 +33,7 @@ def create_table():
     db.create_all()
 """
 
+
 @app.route("/")
 def app_proyecto():
     return render_template('index.html')

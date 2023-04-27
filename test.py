@@ -8,11 +8,12 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
 from models import User, login_manager, db
 # Importamos la clase para validar el formulario
-from forms import SignupForm
+from forms import SignupForm, LoginForm
 
 # Creamos una instancia Flask que se llama app
 app = Flask(__name__)
 # Establecemos seguridad para nuestro programa:
+# noinspection SpellCheckingInspection
 app.config['SECRET_KEY'] = 'erjkqhfvdnie783492hjsdhy4herqoi$()djhfejroejakjior$hrejkd347[]7$'
 # Configuramos SQLAlchemy para que se comunique con nuestra base de datos Postgre
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://daniel:asir23@Localhost:5432/proyectodb'
@@ -43,9 +44,16 @@ def app_proyecto():
 
 @app.route('/acceso', methods=["GET", "POST"])
 def acceso():
+    form=LoginForm()
+
+
+    """
+    # Método de validación simple    
     if request.method == "POST":
         return redirect(url_for("app_proyecto"))
-    return render_template("acceso.html")
+    """
+
+    return render_template("acceso.html", form=form)
 
 
 @app.route('/informacion')

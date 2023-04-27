@@ -6,14 +6,27 @@
 
 <h1> Aquí puedes acceder a tu cuenta </h1>
 
-<form action="" method="post">
-    <label>DNI: </label>
-    <input type="text" id="id" name="id"/><br/>
+<form action="" method="post" novalidate>
 
-    <label>Contraseña: </label>
-    <input type="text" id="password" name="password"/><br/>
+    {{ form.hidden_tag()}}
 
-    <input type="submit" id="inicio_sesion" name="inicio_sesion" value="Accede">
+    {{form.id.label}}
+    {{form.id(size=9)}}
+    {% for error in form.id.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+    </br>
+
+
+    {{form.password.label}}
+    {{form.password(size=50)}}
+    {% for error in form.password.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+    </br>
+
+    {{form.submit}}
+
 </form>
 
 {% endblock %}

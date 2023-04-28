@@ -13,7 +13,22 @@
         <li id="elem"><a href="{{url_for('informacion')}}">Información</a></li>
     </ul>
 <br/>
-<br/><br/>
+<br/>
+
+<div>
+    <ul style="list-style: none;">
+
+        {% if current_user.is_anonymous %}
+        <li>
+            Está navegando sin haber accedido.
+        </li>
+        {% else %}
+        <li> Está navegando con el usuario: {{current_user.name}}</li>
+        <li><a href="{{url_for('logout')}}" style="text-decoration: underline;">Pulse aquí para cerrar sesión</a></li>
+        {% endif %}
+    </ul>
+</div>
+    <br/>
     {% block content %}
 
 

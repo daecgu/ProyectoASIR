@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Para poder realizar la gestion de logins
 login_manager = LoginManager()
-# Para poder realizar mapeos
+# Para poder realizar mapeos ORM
 db = SQLAlchemy()
 
 
@@ -29,11 +29,13 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
+
 # User_loader nos permitirá cargar el usuario que ha hecho login
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(id)
 
-# debemos pasar por parametro el id y esto debe comprobar si existe el usuario.
+
+# debemos pasar por parámetro el ID y esto debe comprobar si existe el usuario.
 def get_user():
     return True

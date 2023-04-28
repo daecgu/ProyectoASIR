@@ -29,7 +29,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-
+# User_loader nos permitirá cargar el usuario que ha hecho login
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(user_id)
+def load_user(id):
+    return User.query.get(id)
+
+# debemos pasar por parametro el id y esto debe comprobar si existe el usuario.
+def get_user():
+    return True

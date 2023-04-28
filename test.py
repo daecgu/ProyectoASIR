@@ -2,11 +2,10 @@
 from flask_sqlalchemy import SQLAlchemy
 # Importamos Flask, render template para los archivos html y url for para los links.
 from flask import Flask, render_template, url_for, request, redirect
-import os
 # Importamos para gestionar login
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
-from models import User, login_manager, db
+from models import User, login_manager, db, get_user
 # Importamos la clase para validar el formulario
 from forms import SignupForm, LoginForm
 
@@ -25,13 +24,14 @@ db.init_app(app)
 
 # Creamos el objeto de la clase LoginManager que llamamos login_manager. Esto permitirá el control de sesiones.
 login_manager.init_app(app)
-login_manager.login_view = "login"
+# Si no está logeado e intenta acceder a una parte de la web restringida a usuarios registrados le llevará a acceso
+login_manager.login_view = "acceso"
 
 
 # Utilizamos esto para crear tabla por convención se llama create_table. Necesitamos utilizar uan función
 # llamada create_all con la instancia de sqlalchemy (db).
 # El decorador hace que se llame solo la primera vez
-""""@app.before_first_request
+"""@app.before_first_request
 def create_table():
     db.create_all()
 """
@@ -44,8 +44,20 @@ def app_proyecto():
 
 @app.route('/acceso', methods=["GET", "POST"])
 def acceso():
-    form=LoginForm()
+    if current_user.is_authenticated:
+        return redirect(url_for("app_proyecto"))
 
+    form = LoginForm()
+    if form.validate_on_submit():
+        # esto hay que hacer algo 131
+        """ if user is not None and user.check_password(form.password.data):
+                login_user(user)
+                next_page = request.args.get("next")
+                if not next_page:
+                    next_page=url_for("acceso")
+                return redirect(next_page)
+                #aquí hay varias cosas que no entiendo voy a ver si puedo entender el código más adelante"""
+        print('Hello world')
 
     """
     # Método de validación simple    
@@ -55,8 +67,9 @@ def acceso():
 
     return render_template("acceso.html", form=form)
 
-
+# Login_required nos indica que necesitas estar logeado para poder acceder.
 @app.route('/informacion')
+@login_required
 def informacion():
     return render_template("informacion.html")
 
@@ -74,6 +87,11 @@ def registros():
         return redirect(url_for("app_proyecto"))
 
     return render_template("registros.html", form=form)
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for("app_proyecto"))
 
 
 """def hola():

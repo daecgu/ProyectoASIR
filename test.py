@@ -45,15 +45,14 @@ def acceso():
         return redirect(url_for("app_proyecto"))
 
     form = LoginForm()
+    if form.validate_on_submit():
+        dni = request.form["id"]
+        user = User.query.filter_by(id=dni).first()
+
+        if user is not None and user.check_password(request.form["password"]):
+            login_user(user)
 
     return render_template("acceso.html", form=form)
-
-
-# Login_required nos indica que necesitas haber iniciado sesión para poder acceder.
-@app.route('/informacion')
-@login_required
-def informacion():
-    return render_template("informacion.html")
 
 
 @app.route('/registros', methods=["GET", "POST"])
@@ -64,8 +63,18 @@ def registros():
 
     form = SignupForm()
     if form.validate_on_submit():
-        id = form.id.data
-        nombre =
+        dni = form.id.data
+        nombre = form.name.data
+        email = form.email.data
+        password = form.password.data
+        descripcion = form.descripcion.data
+
+        user = User(id=dni, name=nombre, email=email, desc=descripcion)
+        user.set_password(password)
+
+        db.session.add(user)
+        db.session.commit()
+
         return redirect(url_for("app_proyecto"))
 
     return render_template("registros.html", form=form)
@@ -75,6 +84,13 @@ def registros():
 def logout():
     logout_user()
     return redirect(url_for("app_proyecto"))
+
+
+# Login_required nos indica que necesitas haber iniciado sesión para poder acceder.
+@app.route('/informacion')
+@login_required
+def informacion():
+    return render_template("informacion.html")
 
 
 """def hola():

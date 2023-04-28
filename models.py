@@ -32,8 +32,8 @@ class User(UserMixin, db.Model):
 
 # User_loader nos permitirá cargar el usuario que ha hecho login
 @login_manager.user_loader
-def load_user(id):
-    return User.query.get(id)
+def load_user(dni):
+    return User.query.get(dni)
 
 
 # debemos pasar por parámetro el ID y esto debe comprobar si existe el usuario.

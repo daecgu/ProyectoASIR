@@ -7,15 +7,16 @@ from wtforms.widgets import TextArea
 
 
 class SignupForm(FlaskForm):
-    id = StringField('id', validators=[DataRequired(), Length(9)])
-    name = StringField('nombre', validators=[DataRequired(), Length(max=50)])
-    email = StringField('emails', validators=[DataRequired(), Email(), Length(max=256)])
-    password = PasswordField('password', validators=[DataRequired(), Length(max=50)])
-    descripcion = StringField('descripcion', validators=[DataRequired(), Length(max=1024)], widget=TextArea())
+    id = StringField('DNI', validators=[DataRequired(), Length(9)])
+    name = StringField('Nombre', validators=[DataRequired(), Length(max=50)])
+    email = StringField('Email', validators=[DataRequired(), Email(), Length(max=256)])
+    password = PasswordField('Contraseña', validators=[DataRequired(), Length(max=50)])
+    descripcion = StringField('Información', validators=[DataRequired(), Length(max=1024)], widget=TextArea())
 
     submit = SubmitField('Registrate')
 
+
 class LoginForm(FlaskForm):
-    id = StringField('id', validators=[DataRequired()])
-    password = PasswordField('password', validators=[DataRequired()])
+    id = StringField('DNI', validators=[DataRequired()])
+    password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Accede')

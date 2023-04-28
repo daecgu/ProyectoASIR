@@ -5,7 +5,7 @@ from flask import Flask, render_template, url_for, request, redirect
 # Importamos para gestionar login
 from flask_login import current_user, login_user, logout_user, login_required
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
-from models import User, login_manager, db, get_user
+from models import User, login_manager, db
 # Importamos la clase para validar el formulario
 from forms import SignupForm, LoginForm
 
@@ -51,6 +51,7 @@ def acceso():
 
         if user is not None and user.check_password(request.form["password"]):
             login_user(user)
+            return redirect("/informacion")
 
     return render_template("acceso.html", form=form)
 

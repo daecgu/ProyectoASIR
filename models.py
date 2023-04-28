@@ -34,8 +34,3 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(dni):
     return User.query.get(dni)
-
-
-# debemos pasar por parámetro el ID y esto debe comprobar si existe el usuario.
-def get_user():
-    return True

@@ -1,5 +1,3 @@
-# Importamos el ORM
-from flask_sqlalchemy import SQLAlchemy
 # Importamos Flask, render_template para los archivos html y url for para los links.
 from flask import Flask, render_template, url_for, request, redirect
 # Importamos para gestionar login

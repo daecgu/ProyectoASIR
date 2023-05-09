@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
 from models import User, login_manager, db
 # Importamos la clase para validar el formulario
-from forms import SignupForm, LoginForm
+from forms import SignupForm, LoginForm, ModifyForm
 
 # Creamos una instancia Flask que se llama app
 app = Flask(__name__)
@@ -86,16 +86,21 @@ def logout():
 
 
 # Login_required nos indica que necesitas haber iniciado sesión para poder acceder.
-@app.route('/informacion')
+@app.route('/informacion', methods=["GET", "POST"])
 @login_required
 def informacion():
-    return render_template("informacion.html")
+    form = ModifyForm()
+    if form.validate_on_submit():
+        current_user.desc = form.descripcion.data
+        db.session.commit()
+    return render_template("informacion.html", form=form)
 
 
 """def hola():
     # return "<h1 style='color:blue'> Este test Funciona! </h1>" para la prueba inicial.
     # return "<h1 style='color:green'> Funciona gunicorn! </h1>"
     return "<h1 style='color:red'> Funciona NGINX! </h1>"""""
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

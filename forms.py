@@ -20,3 +20,8 @@ class LoginForm(FlaskForm):
     id = StringField('DNI', validators=[DataRequired()])
     password = PasswordField('Contraseña', validators=[DataRequired()])
     submit = SubmitField('Accede')
+
+
+class ModifyForm(FlaskForm):
+    descripcion = StringField('Modifica tu Información', validators=[DataRequired(), Length(max=1024)], widget=TextArea())
+    submit = SubmitField('Modifica tus datos')

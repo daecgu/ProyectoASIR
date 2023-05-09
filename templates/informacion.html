@@ -8,4 +8,20 @@
 <br/><br/><br/>
 <h3>{{current_user.desc}}</h3>
 <br/><br/>
+
+<form action="" method="post" novalidate>
+
+    {{ form.hidden_tag()}}
+
+    {{form.descripcion.label}}
+    {{form.descripcion(size=1024)}}
+    {% for error in form.descripcion.errors %}
+    <span style="color: red;">{{error}}</span>
+    {% endfor %}
+
+    </br>
+
+    {{form.submit}}
+</form>
+
 {% endblock %}

@@ -25,3 +25,7 @@ class LoginForm(FlaskForm):
 class ModifyForm(FlaskForm):
     descripcion = StringField('Modifica tu Información', validators=[DataRequired(), Length(max=1024)], widget=TextArea())
     submit = SubmitField('Modifica tus datos')
+
+
+class DeleteForm(FlaskForm):
+    submit = SubmitField('¡¡¡Elimina tu cuenta!!!')

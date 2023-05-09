@@ -5,7 +5,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 # Importamos de los models los el usuario, la instancia del orm y el login manager.
 from models import User, login_manager, db
 # Importamos la clase para validar el formulario
-from forms import SignupForm, LoginForm, ModifyForm
+from forms import SignupForm, LoginForm, ModifyForm, DeleteForm
 
 # Creamos una instancia Flask que se llama app
 app = Flask(__name__)
@@ -32,9 +32,16 @@ def create_table():
     db.create_all()
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def app_proyecto():
-    return render_template('index.html')
+    form = DeleteForm()
+    if form.validate_on_submit():
+        current_user_id = current_user.id
+        logout_user()
+        User.query.filter_by(id=current_user_id).delete()
+        db.session.commit()
+
+    return render_template('index.html', form=form)
 
 
 @app.route('/acceso', methods=["GET", "POST"])

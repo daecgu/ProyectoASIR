@@ -18,7 +18,8 @@ Configuración NGINX:
 
 
 server {
-    listen 80;
+    listen 80 default_server;
+    listen [::]:80 default_server;
     server_name localhost;
 
     location / {

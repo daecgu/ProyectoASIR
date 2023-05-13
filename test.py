@@ -31,7 +31,9 @@ login_manager.login_view = "acceso"
 def create_table():
     db.create_all()
 
-
+# el decorador @app.route indica la URL con la que vamos a visualizar la web
+# se le pueden añadir parámetro para tener una "url" dinámica y pasar parámetro mediante la URL
+# En el proyecto no utilizaremos url dinámicas. Además le añadimos los métodos que va a admitir.
 @app.route("/", methods=["GET", "POST"])
 def app_proyecto():
     form = DeleteForm()
@@ -43,10 +45,15 @@ def app_proyecto():
 
     return render_template('index.html', form=form)
 
-
+# En elste decorador, si en vez de /acceso fuese /acceso/ se convertiría en una URL canónica, que son links
+# con el atributo canónico('rel='canonical'), que sirven para indicar a los buscadores web qué deben mostrar.
+# En nuestro caso si pusieramos /acceso/ terminaría en un resultado error 404 página no encontrada.
 @app.route('/acceso', methods=["GET", "POST"])
 def acceso():
     if current_user.is_authenticated:
+        # url_for es muy útil para consturir dinámicamente una URL para una función específica. LA función acepta el nombre
+        # de una función como primer argumento, y uno o más argumentos de palabra clave,
+        # que corresonderían a la parte variable de la URL.
         return redirect(url_for("app_proyecto"))
 
     form = LoginForm()
@@ -103,6 +110,7 @@ def informacion():
     return render_template("informacion.html", form=form)
 
 
+# Esto son las pruebas que realizamos inicialmente para comprobar que funcionaban los servidores.
 """def hola():
     # return "<h1 style='color:blue'> Este test Funciona! </h1>" para la prueba inicial.
     # return "<h1 style='color:green'> Funciona gunicorn! </h1>"
@@ -110,4 +118,7 @@ def informacion():
 
 
 if __name__ == "__main__":
+    # app.run(host, port, debug, options) host=0.0.0.0 Nos permite servir la aplicación externamente
+    # en otro caso solo la servirá en 127.0.0.1 (localhost). El puerto por defecto es 5000. 
+    # Debug por defecto es false, por lo que comienza sirviendo en modo "producción".
     app.run(host='0.0.0.0')

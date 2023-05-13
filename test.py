@@ -42,8 +42,18 @@ def app_proyecto():
         logout_user()
         User.query.filter_by(id=current_user_id).delete()
         db.session.commit()
-
+    # A continuación utilizaremos el motor de plantillas Jinja2. En lugar de devolver código HTML desde la función, 
+    # se renderiza un archivo HTML mediante la función render_template, a la cual le pasamos por parámetro
+    # el nombre del archivo que se encuentra en la carpeta /templates. También le pasamos el formulario como parámetro.
+    # el "sistema de plantillas web" es una forma mediante la cual los datos variables pueden insertarse de forma variable.
+    # Así nuestra plantillas web contienen marcadores de posición de sintaxis HTML intercalados para variables y expresiones,
+    # que son valores reemplazados cuando se renderiza la plantilla. 
     return render_template('index.html', form=form)
+""" Jinja2 para los archivos HTML:
+{% ... %} Sentencias
+{{ ... }} Expresiones, variables para mostrar en la salida de la plantilla
+{# ... #} comentarios no incluidos en la salida de la plantilla
+"""
 
 # En elste decorador, si en vez de /acceso fuese /acceso/ se convertiría en una URL canónica, que son links
 # con el atributo canónico('rel='canonical'), que sirven para indicar a los buscadores web qué deben mostrar.
@@ -58,6 +68,8 @@ def acceso():
 
     form = LoginForm()
     if form.validate_on_submit():
+        # request.form es un objeto de tipo diccionario que contiene los datos del formulario enviado a través
+        # de una petición POST, en este caso se le especifica que recupere el que tiene por clave "id". 
         dni = request.form["id"]
         user = User.query.filter_by(id=dni).first()
 

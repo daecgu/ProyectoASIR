@@ -9,7 +9,9 @@ from forms import SignupForm, LoginForm, ModifyForm, DeleteForm
 
 # Creamos una instancia Flask que se llama app
 app = Flask(__name__)
-# Establecemos seguridad para nuestro programa:
+# Establecemos seguridad para nuestro programa. A una sesión con cada cliente se le asigna un ID de sesión. 
+# Los datos de la sesión se almacenan sobre cookies y el servidor los firma criptográficamente. Para este cifrado
+# las aplicaciones flask necesitan una "SECRET_KEY" definida, y es lo que hacemos con la siguiente línea. 
 # noinspection SpellCheckingInspection
 app.config['SECRET_KEY'] = 'erjkqhfvdnie783492hjsdhy4herqoi$()djhfejroejakjior$hrejkd347[]7$84932yutrewjgw89th4w84hh'
 # Configuramos SQLAlchemy para que se comunique con nuestra base de datos Postgre
@@ -40,6 +42,7 @@ def app_proyecto():
     if form.validate_on_submit():
         current_user_id = current_user.id
         logout_user()
+        # Con la siguiente sentencia lo que se hace es una consulta del modelo User, y una vez encontrado por id lo elimina.
         User.query.filter_by(id=current_user_id).delete()
         db.session.commit()
     # A continuación utilizaremos el motor de plantillas Jinja2. En lugar de devolver código HTML desde la función, 
@@ -75,6 +78,8 @@ def acceso():
 
         if user is not None and user.check_password(request.form["password"]):
             login_user(user)
+            # redirect es una función que devuelve un objeto de respuesta y redirige al usuario a otra ubucación de destino
+            # con el estado especificado: redirect(location, statuscode, response)
             return redirect("/informacion")
 
     return render_template("acceso.html", form=form)
@@ -93,10 +98,10 @@ def registros():
         email = form.email.data
         password = form.password.data
         descripcion = form.descripcion.data
-
+        # en la variable user que es un objeto de tipo User, se crea con los datos del formulario.
         user = User(id=dni, name=nombre, email=email, desc=descripcion)
         user.set_password(password)
-
+        # SQLAlchemy añade el usuario a la Base de Datos y confirma la acción.  
         db.session.add(user)
         db.session.commit()
 
